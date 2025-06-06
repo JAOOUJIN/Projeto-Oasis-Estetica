@@ -1,6 +1,6 @@
-# 🌸 Oásis Estética - Website 🌸
+# 🌸 Oásis Estética 🌸
 
-![Oásis Estética Logo](public/favicon/apple-touch-icon.png) Website desenvolvido com **React** e **Tailwind CSS** para a **Oásis Estética**, uma clínica focada em bem-estar e beleza.
+Website desenvolvido com **React** e **Tailwind CSS** para a **Oásis Estética**, uma clínica focada em bem-estar e beleza.
 
 ---
 
