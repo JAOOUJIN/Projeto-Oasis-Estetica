@@ -1,0 +1,94 @@
+import { FaUser, FaCalendarAlt, FaUserMd, FaSpa, FaTrashAlt, FaEdit } from "react-icons/fa";
+
+const ConsultaLista = ({ consultas, onCancelar, onEdit, clienteAtual = "" }) => {
+    const nomeCliente = clienteAtual.trim().toLowerCase();
+
+    const consultasFiltradas = consultas.filter(
+        (c) => c.cliente.trim().toLowerCase() === nomeCliente
+    );
+
+    if (!clienteAtual) {
+        return (
+            <p className="mt-6 p-4 text-center text-sm text-gray-500 italic bg-purple-50 rounded-lg animate-fade-in border border-purple-200">
+                Digite seu nome acima para visualizar suas consultas agendadas.
+            </p>
+        );
+    }
+
+    if (consultasFiltradas.length === 0) {
+        return (
+            <p className="mt-6 p-4 text-center text-sm text-gray-500 italic bg-yellow-50 rounded-lg animate-fade-in border border-yellow-200">
+                Nenhuma consulta agendada encontrada para este nome.
+            </p>
+        );
+    }
+
+    return (
+        <div className="mt-6 space-y-4">
+            {consultasFiltradas.map((consulta) => (
+                <div
+                    key={consulta.id}
+                    className="bg-white text-gray-800 p-4 rounded-lg shadow-md transition transform hover:scale-[1.01] hover:shadow-xl duration-300 relative animate-fade-in border border-purple-100"
+                >
+                    <div className="absolute top-2 right-2 flex space-x-2">
+                        <button
+                            onClick={() => onEdit(consulta)}
+                            className="text-blue-500 hover:text-blue-700 transition"
+                            title="Editar agendamento"
+                        >
+                            <FaEdit />
+                        </button>
+                        <button
+                            onClick={() => onCancelar(consulta.id)}
+                            className="text-red-500 hover:text-red-700 transition"
+                            title="Cancelar agendamento"
+                        >
+                            <FaTrashAlt />
+                        </button>
+                    </div>
+
+                    <p className="flex items-center gap-2 mb-1 text-base">
+                        <FaUser className="text-purple-600" />
+                        <span className="font-medium text-gray-700">Cliente:</span>{" "}
+                        <span className="font-normal text-gray-800">{consulta.cliente}</span>
+                    </p>
+
+                    <p className="flex items-center gap-2 mb-1 text-base">
+                        <FaSpa className="text-purple-600" />
+                        <span className="font-medium text-gray-700">Serviço:</span>{" "}
+                        <span className="font-normal text-gray-800">{consulta.servico}</span>
+                    </p>
+
+                    <p className="flex items-center gap-2 mb-1 text-base">
+                        <FaUserMd className="text-purple-600" />
+                        <span className="font-medium text-gray-700">Profissional:</span>{" "}
+                        <span className="font-normal text-gray-800">{consulta.profissional}</span>
+                    </p>
+
+                    <p className="flex items-center gap-2 text-base">
+                        <FaCalendarAlt className="text-purple-600" />
+                        <span className="font-medium text-gray-700">Data e Hora:</span>{" "}
+                        <span className="font-normal text-gray-800">
+                            {new Date(consulta.dataHora).toLocaleString("pt-BR", {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                            })}
+                        </span>
+                    </p>
+
+                    <p className="mt-2 text-sm">
+                        <span className="font-semibold text-purple-700">Status:</span>{" "}
+                        <span className="text-green-600 font-medium px-2 py-1 rounded-full bg-green-100">
+                            {consulta.status}
+                        </span>
+                    </p>
+                </div>
+            ))}
+        </div>
+    );
+};
+
+export default ConsultaLista;
