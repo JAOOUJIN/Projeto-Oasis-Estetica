@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import ConsultaLista from "../components/ConsultaLista";
+import ConsultaLista from "../components/ConsultaLista"; 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "../styles/datepicker-theme.css";
+import "../styles/datepicker-theme.css"; 
 import { Link } from "react-router-dom"; 
 
 
@@ -20,12 +20,13 @@ const Agendamento = () => {
     });
 
     const [mensagem, setMensagem] = useState("");
-    const [erro, setErro] = useState("");
-
+    const [erro, setErro] = useState(""); 
+    
     const [editandoId, setEditandoId] = useState(null); 
 
     const [form, setForm] = useState({
-        cliente: "",
+        nomeCliente: "",
+        cpf: "",
         servico: "",
         profissional: "",
         dataHora: null,
@@ -36,7 +37,7 @@ const Agendamento = () => {
         if (armazenadas) {
             const parsedConsultas = JSON.parse(armazenadas).map(consulta => ({
                 ...consulta,
-                dataHora: new Date(consulta.dataHora)
+                dataHora: new Date(consulta.dataHora) 
             }));
             setConsultas(parsedConsultas);
         }
@@ -46,7 +47,6 @@ const Agendamento = () => {
         localStorage.setItem("consultas", JSON.stringify(consultas));
     }, [consultas]);
 
-    // Função auxiliar para exibir mensagens
     const displayMessage = (msg, type = "success") => {
         if (type === "success") {
             setMensagem(msg);
@@ -58,7 +58,7 @@ const Agendamento = () => {
         setTimeout(() => {
             setMensagem("");
             setErro("");
-        }, 4000);
+        }, 4000); 
     };
 
     const handleChange = (e) => {
@@ -72,6 +72,21 @@ const Agendamento = () => {
                 servico: value,
                 profissional,
             });
+        } else if (name === "cpf") {
+            const cpfNumeros = value.replace(/\D/g, ''); 
+            const cpfLimitado = cpfNumeros.substring(0, 11); 
+            let cpfFormatado = cpfLimitado;
+
+            if (cpfLimitado.length > 3) {
+                cpfFormatado = cpfLimitado.substring(0, 3) + '.' + cpfLimitado.substring(3);
+            }
+            if (cpfLimitado.length > 6) {
+                cpfFormatado = cpfLimitado.substring(0, 3) + '.' + cpfLimitado.substring(3, 6) + '.' + cpfLimitado.substring(6);
+            }
+            if (cpfLimitado.length > 9) {
+                cpfFormatado = cpfLimitado.substring(0, 3) + '.' + cpfLimitado.substring(3, 6) + '.' + cpfLimitado.substring(6, 9) + '-' + cpfLimitado.substring(9, 11);
+            }
+            setForm({ ...form, [name]: cpfFormatado });
         } else {
             setForm({ ...form, [name]: value });
         }
@@ -79,26 +94,35 @@ const Agendamento = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setMensagem("");
+        setMensagem(""); 
         setErro("");
 
-        if (!form.cliente || !form.servico || !form.dataHora) {
-            displayMessage("Por favor, preencha todos os campos obrigatórios.", "error");
+        if (!form.nomeCliente || !form.cpf || !form.servico || !form.dataHora) {
+            displayMessage("Por favor, preencha todos os campos obrigatórios (Nome, CPF, Serviço e Data/Hora).", "error");
             return;
         }
 
-        if (form.dataHora < new Date()) {
+        const cpfLimpo = form.cpf.replace(/\D/g, '');
+        if (cpfLimpo.length !== 11) {
+            displayMessage("CPF inválido. Deve conter 11 dígitos numéricos.", "error");
+            return;
+        }
+
+        const dataHoraSelecionada = form.dataHora.getTime(); 
+        const now = new Date().getTime();
+
+        if (dataHoraSelecionada < now) {
             displayMessage("Você não pode agendar para um horário que já passou.", "error");
             return;
         }
 
-        const data = new Date(form.dataHora);
+        const data = new Date(dataHoraSelecionada);
         const hora = data.getHours();
         const minutos = data.getMinutes();
-        const dia = data.getDay();
+        const dia = data.getDay(); 
 
-        if (hora < 8 || hora >= 18 || dia === 0 || dia === 6) {
-            displayMessage("Escolha um horário entre 08h e 17h em dias úteis.", "error");
+        if (hora < 8 || hora >= 18 || dia === 0 || dia === 6) { 
+            displayMessage("Escolha um horário entre 08h e 17h em dias úteis (Segunda a Sexta).", "error"); 
             return;
         }
 
@@ -107,20 +131,42 @@ const Agendamento = () => {
             return;
         }
 
-        const conflito = consultas.find(
+        const conflitoProfissional = consultas.find(
             (c) =>
                 c.profissional === form.profissional &&
-                new Date(c.dataHora).getTime() === form.dataHora.getTime() &&
+                new Date(c.dataHora).getTime() === dataHoraSelecionada &&
                 c.id !== editandoId 
         );
 
-        if (conflito) {
-            displayMessage("Esse horário já está ocupado para esse profissional.", "error");
+        if (conflitoProfissional) {
+            displayMessage(`O profissional ${form.profissional} já está ocupado nesse horário. Por favor, escolha outro horário.`, "error");
+            return;
+        }
+
+        const conflitoClienteNoHorario = consultas.find(
+            (c) =>
+                c.cpf && c.cpf.replace(/\D/g, '') === cpfLimpo && 
+                new Date(c.dataHora).getTime() === dataHoraSelecionada &&
+                c.id !== editandoId 
+        );
+
+        if (conflitoClienteNoHorario) {
+            displayMessage("Você já possui um agendamento para este horário. Por favor, escolha outro horário ou edite seu agendamento existente.", "error");
+            return;
+        }
+
+        const clienteExistenteComCpf = consultas.find(
+            (c) =>
+                c.cpf && c.cpf.replace(/\D/g, '') === cpfLimpo &&
+                c.id !== editandoId 
+        );
+
+        if (clienteExistenteComCpf && clienteExistenteComCpf.nomeCliente.toLowerCase() !== form.nomeCliente.toLowerCase()) {
+            displayMessage(`O CPF ${form.cpf} já está registrado com o nome "${clienteExistenteComCpf.nomeCliente}". Por favor, utilize o nome correto ou edite um agendamento existente.`, "error");
             return;
         }
 
         if (editandoId) {
-            // Lógica de ATUALIZAÇÃO 
             const consultasAtualizadas = consultas.map((c) =>
                 c.id === editandoId
                     ? { ...form, id: editandoId, dataHora: form.dataHora.toISOString(), status: "Agendado" }
@@ -130,20 +176,19 @@ const Agendamento = () => {
             setEditandoId(null); 
             displayMessage("Consulta atualizada com sucesso!");
         } else {
-            // Lógica de CRIAÇÃO 
             const novaConsulta = {
                 id: Date.now(),
-                ...form,
-                dataHora: form.dataHora.toISOString(),
+                ...form, 
+                dataHora: form.dataHora.toISOString(), 
                 status: "Agendado",
             };
             setConsultas([...consultas, novaConsulta]);
             displayMessage("Consulta agendada com sucesso!");
         }
 
-        // Limpa o formulário após a operação
         setForm({
-            cliente: "",
+            nomeCliente: "",
+            cpf: "",
             servico: "",
             profissional: "",
             dataHora: null,
@@ -156,23 +201,23 @@ const Agendamento = () => {
         displayMessage("Consulta cancelada.", "success");
     };
 
-    // Função para EDITAR uma consulta
     const handleEdit = (consulta) => {
         setEditandoId(consulta.id); 
         setForm({
-            cliente: consulta.cliente,
+            nomeCliente: consulta.nomeCliente, 
+            cpf: consulta.cpf,                 
             servico: consulta.servico,
             profissional: consulta.profissional,
-            dataHora: new Date(consulta.dataHora),
+            dataHora: new Date(consulta.dataHora), 
         });
         displayMessage("Editando consulta...", "info"); 
     };
 
-    // Função para CANCELAR o modo de edição
     const handleCancelEdit = () => {
         setEditandoId(null);
         setForm({
-            cliente: "",
+            nomeCliente: "",
+            cpf: "",
             servico: "",
             profissional: "",
             dataHora: null,
@@ -180,27 +225,26 @@ const Agendamento = () => {
         displayMessage("Edição cancelada.", "error");
     };
 
-
     const getMinTime = (date) => {
-        const now = new Date();
-        if (date && date.toDateString() === now.toDateString()) {
-            const currentHour = now.getHours();
-            const currentMinute = now.getMinutes();
-            const minHour = currentHour < 8 ? 8 : currentHour + 1;
-            const minMinute = 0;
-
-            const minTime = new Date();
-            minTime.setHours(minHour, minMinute, 0, 0);
-            return minTime;
-        }
-        const defaultMinTime = new Date();
-        defaultMinTime.setHours(8, 0, 0, 0);
-        return defaultMinTime;
+      const now = new Date();
+      if (date && date.toDateString() === now.toDateString()) {
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+        const minHour = currentHour < 8 ? 8 : currentHour + 1; 
+        const minMinute = 0; 
+        
+        const minTime = new Date();
+        minTime.setHours(minHour, minMinute, 0, 0);
+        return minTime;
+      }
+      const defaultMinTime = new Date();
+      defaultMinTime.setHours(8, 0, 0, 0); 
+      return defaultMinTime;
     };
 
     const getMaxTime = () => {
         const maxTime = new Date();
-        maxTime.setHours(17, 0, 0, 0);
+        maxTime.setHours(17, 0, 0, 0); 
         return maxTime;
     };
 
@@ -215,18 +259,33 @@ const Agendamento = () => {
                     {/* Formulário de Agendamento */}
                     <div>
                         <h3 className="text-2xl font-bold text-purple-700 mb-6 border-b-2 border-purple-300 pb-3">
-                            {editandoId ? "Editar Consulta" : "Detalhes da Consulta"} 
+                            {editandoId ? "Editar Consulta" : "Detalhes da Consulta"}
                         </h3>
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
-                                <label htmlFor="cliente" className="block mb-1 text-sm font-medium text-gray-700">Seu nome</label>
+                                <label htmlFor="nomeCliente" className="block mb-1 text-sm font-medium text-gray-700">Seu nome</label>
                                 <input
                                     type="text"
-                                    id="cliente"
-                                    name="cliente"
-                                    value={form.cliente}
+                                    id="nomeCliente"
+                                    name="nomeCliente"
+                                    value={form.nomeCliente}
                                     onChange={handleChange}
                                     placeholder="Digite seu nome completo"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200"
+                                    required
+                                />
+                            </div>
+                            
+                            <div>
+                                <label htmlFor="cpf" className="block mb-1 text-sm font-medium text-gray-700">Seu CPF</label>
+                                <input
+                                    type="text"
+                                    id="cpf"
+                                    name="cpf"
+                                    value={form.cpf}
+                                    onChange={handleChange}
+                                    placeholder="000.000.000-00"
+                                    maxLength="14"
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200"
                                     required
                                 />
@@ -260,7 +319,7 @@ const Agendamento = () => {
                                     value={form.profissional}
                                     readOnly
                                     disabled
-                                    className="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm cursor-not-allowed"
+                                    className="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm cursor-not-allowed" 
                                 />
                             </div>
 
@@ -274,7 +333,7 @@ const Agendamento = () => {
                                     timeIntervals={60}
                                     minDate={new Date()}
                                     minTime={getMinTime(form.dataHora || new Date())}
-                                    maxTime={getMaxTime()}
+                                    maxTime={getMaxTime()} 
                                     dateFormat="dd/MM/yyyy HH:mm"
                                     placeholderText="Escolha a melhor data e horário"
                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-200 bg-white"
@@ -307,7 +366,7 @@ const Agendamento = () => {
                         )}
                     </div>
 
-                    {/* Lista de Agendamentos ou Imagem/CTA */}
+                    {/* Lista de Agendamentos */}
                     <div>
                         <h3 className="text-2xl font-bold text-purple-700 mb-6 border-b-2 border-purple-300 pb-3">
                             Meus Agendamentos
@@ -316,14 +375,8 @@ const Agendamento = () => {
                             consultas={consultas}
                             onCancelar={handleCancelar}
                             onEdit={handleEdit}
-                            clienteAtual={form.cliente}
+                            cpfAtual={form.cpf}
                         />
-
-                        {consultas.length === 0 && (
-                            <p className="text-gray-500 text-center mt-8">
-                                Você ainda não possui agendamentos.
-                            </p>
-                        )}
 
                         <div className="mt-10 bg-purple-50 p-6 rounded-lg shadow-md text-center">
                             <h4 className="text-xl font-bold text-purple-700 mb-3">Conheça Nossos Tratamentos</h4>

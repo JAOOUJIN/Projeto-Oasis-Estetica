@@ -1,24 +1,24 @@
-import { FaUser, FaCalendarAlt, FaUserMd, FaSpa, FaTrashAlt, FaEdit } from "react-icons/fa";
+import { FaUser, FaCalendarAlt, FaUserMd, FaSpa, FaTrashAlt, FaEdit, FaIdCard } from "react-icons/fa"; 
 
-const ConsultaLista = ({ consultas, onCancelar, onEdit, clienteAtual = "" }) => {
-    const nomeCliente = clienteAtual.trim().toLowerCase();
+const ConsultaLista = ({ consultas, onCancelar, onEdit, cpfAtual = "" }) => {
+    const cpfParaFiltrar = cpfAtual.replace(/\D/g, ''); 
 
     const consultasFiltradas = consultas.filter(
-        (c) => c.cliente.trim().toLowerCase() === nomeCliente
+        (c) => c.cpf && c.cpf.replace(/\D/g, '') === cpfParaFiltrar 
     );
 
-    if (!clienteAtual) {
+    if (!cpfAtual) { 
         return (
             <p className="mt-6 p-4 text-center text-sm text-gray-500 italic bg-purple-50 rounded-lg animate-fade-in border border-purple-200">
-                Digite seu nome acima para visualizar suas consultas agendadas.
+                Digite seu CPF no formulário para visualizar suas consultas agendadas.
             </p>
         );
     }
 
-    if (consultasFiltradas.length === 0) {
+    if (cpfParaFiltrar.length < 11 || consultasFiltradas.length === 0) { 
         return (
             <p className="mt-6 p-4 text-center text-sm text-gray-500 italic bg-yellow-50 rounded-lg animate-fade-in border border-yellow-200">
-                Nenhuma consulta agendada encontrada para este nome.
+                Nenhuma consulta agendada encontrada para o CPF digitado.
             </p>
         );
     }
@@ -30,6 +30,7 @@ const ConsultaLista = ({ consultas, onCancelar, onEdit, clienteAtual = "" }) => 
                     key={consulta.id}
                     className="bg-white text-gray-800 p-4 rounded-lg shadow-md transition transform hover:scale-[1.01] hover:shadow-xl duration-300 relative animate-fade-in border border-purple-100"
                 >
+                    {/* Contêiner para os botões de ação */}
                     <div className="absolute top-2 right-2 flex space-x-2">
                         <button
                             onClick={() => onEdit(consulta)}
@@ -47,25 +48,31 @@ const ConsultaLista = ({ consultas, onCancelar, onEdit, clienteAtual = "" }) => 
                         </button>
                     </div>
 
-                    <p className="flex items-center gap-2 mb-1 text-base">
+                    <p className="flex items-center gap-2 mb-1 text-base"> 
                         <FaUser className="text-purple-600" />
-                        <span className="font-medium text-gray-700">Cliente:</span>{" "}
-                        <span className="font-normal text-gray-800">{consulta.cliente}</span>
+                        <span className="font-medium text-gray-700">Cliente:</span>{" "} 
+                        <span className="font-normal text-gray-800">{consulta.nomeCliente}</span> 
                     </p>
 
-                    <p className="flex items-center gap-2 mb-1 text-base">
+                    <p className="flex items-center gap-2 mb-1 text-base"> 
+                        <FaIdCard className="text-purple-600" /> 
+                        <span className="font-medium text-gray-700">CPF:</span>{" "}
+                        <span className="font-normal text-gray-800">{consulta.cpf}</span> 
+                    </p>
+
+                    <p className="flex items-center gap-2 mb-1 text-base"> 
                         <FaSpa className="text-purple-600" />
                         <span className="font-medium text-gray-700">Serviço:</span>{" "}
                         <span className="font-normal text-gray-800">{consulta.servico}</span>
                     </p>
 
-                    <p className="flex items-center gap-2 mb-1 text-base">
+                    <p className="flex items-center gap-2 mb-1 text-base"> 
                         <FaUserMd className="text-purple-600" />
                         <span className="font-medium text-gray-700">Profissional:</span>{" "}
                         <span className="font-normal text-gray-800">{consulta.profissional}</span>
                     </p>
 
-                    <p className="flex items-center gap-2 text-base">
+                    <p className="flex items-center gap-2 text-base"> 
                         <FaCalendarAlt className="text-purple-600" />
                         <span className="font-medium text-gray-700">Data e Hora:</span>{" "}
                         <span className="font-normal text-gray-800">
