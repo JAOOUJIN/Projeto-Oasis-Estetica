@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-// Imagens
+// Importa as imagens utilizadas nas diferentes seções da página.
 import heroImg from "../assets/img/Limpeza-Pele.jpg";
 import limpezaImg from "../assets/img/Limpeza-Pele2.jpg";
 import massagemImg from "../assets/img/Massagem.jpg";
@@ -9,6 +9,8 @@ import tratamentosImg from "../assets/img/Tratamento-Corporal.jpg";
 import sobreImg from "../assets/img/sobrenos3.jpg";
 import locationImg from "../assets/img/Espaco.jpg";
 
+
+// Dados estáticos dos serviços exibidos na seção "Nossos Serviços".
 const servicos = [
   {
     title: "Limpeza de Pele",
@@ -32,9 +34,11 @@ const servicos = [
   },
 ];
 
+// Componente principal da página Home.
 const Home = () => {
   return (
     <section className="text-gray-800">
+      {/* Seção HERO (Banner Principal) */}
       <div
         className="w-full h-[500px] bg-cover bg-center flex items-center justify-center text-white"
         style={{ backgroundImage: `url(${heroImg})` }}
@@ -46,6 +50,7 @@ const Home = () => {
           <p className="mt-4 text-lg md:text-xl max-w-xl mx-auto">
             Cuide da sua beleza e bem-estar com nossos serviços especializados.
           </p>
+          {/* Botão CTA que leva para a página de Agendamento. */}
           <Link
             to="/agendamento"
             className="mt-6 inline-block bg-purple-600 hover:bg-purple-700 transition text-white px-6 py-3 rounded-full font-semibold"
@@ -55,9 +60,11 @@ const Home = () => {
         </div>
       </div>
 
-      {/* SERVIÇOS */}
+      {/* Seção "Nossos Serviços" (Visão Geral) */}
+      {/* Apresenta os principais serviços da clínica em cards, com imagem, título e descrição. */}
       <div className="py-16 px-6 max-w-7xl mx-auto text-center bg-white shadow-xl rounded-lg -mt-20 relative z-10">
         <h2 className="text-3xl font-bold text-purple-700 mb-10">Nossos Serviços</h2>
+        {/* Grid de cards de serviço, responsivo para diferentes tamanhos de tela. */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {servicos.map((s, idx) => (
             <div
@@ -72,7 +79,7 @@ const Home = () => {
             </div>
           ))}
         </div>
-
+        {/* Link para a página completa de Serviços. */}
         <Link
           to="/servicos"
           className="mt-10 inline-block text-purple-600 hover:underline font-medium"
@@ -81,9 +88,11 @@ const Home = () => {
         </Link>
       </div>
 
-      {/* SEÇÃO SOBRE NÓS NA HOME */}
+      {/* Seção "Quem Somos" */}
+      {/* Apresenta uma breve introdução sobre a clínica com imagem e texto, e um link para a página completa "Sobre Nós". */}
       <div className="py-16 px-6 max-w-7xl mx-auto text-center bg-gray-50 rounded-lg shadow-lg my-12">
         <h2 className="text-3xl font-bold text-purple-700 mb-10">Quem Somos</h2>
+        {/* Layout flexível de imagem e texto (coluna em mobile, linha em desktop). */}
         <div className="flex flex-col md:flex-row items-center gap-10">
           <div className="md:w-1/2">
             <img
@@ -103,6 +112,7 @@ const Home = () => {
               oferecemos um ambiente acolhedor e seguro para todos os seus cuidados de pele e corpo.
               Descubra o oásis que existe em você!
             </p>
+            {/* Botão para saber mais na página "Sobre Nós". */}
             <Link
               to="/sobre"
               className="inline-block bg-purple-600 hover:bg-purple-700 transition text-white px-6 py-3 rounded-full font-semibold"
@@ -113,7 +123,8 @@ const Home = () => {
         </div>
       </div>
 
-      {/* CONTATO RÁPIDO NA HOME */}
+      {/* Seção "Encontre a Oásis Estética" (Contato Rápido) */}
+      {/* Convida o usuário a encontrar a clínica, com imagem e link para a página de Contato. */}
       <div className="py-16 px-6 max-w-7xl mx-auto text-center bg-white rounded-lg shadow-lg my-12">
         <h2 className="text-3xl font-bold text-purple-700 mb-10">Encontre a Oásis Estética</h2>
         <div className="flex flex-col md:flex-row items-center gap-10">
@@ -131,6 +142,7 @@ const Home = () => {
             <p className="text-md mb-6">
               Venha nos visitar ou agende sua consulta online. Sua transformação começa aqui!
             </p>
+            {/* Link para a página de Contato. */}
             <Link
               to="/contato"
               className="inline-block bg-purple-600 hover:bg-purple-700 transition text-white px-6 py-3 rounded-full font-semibold"
@@ -140,8 +152,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-
     </section>
   );
 };

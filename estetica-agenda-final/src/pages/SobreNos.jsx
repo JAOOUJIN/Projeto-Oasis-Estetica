@@ -1,28 +1,31 @@
 import { Link } from "react-router-dom";
 import clinicInterior from "../assets/img/Espaco.jpg";
-import teamPhoto from "../assets/img/team3.jpg";  
+import teamPhoto from "../assets/img/team3.jpg";
 
+// Componente principal da página "Sobre Nós".
 const SobreNos = () => {
   return (
     <div className="py-16 px-6 max-w-7xl mx-auto text-gray-800">
-      {/* Título Principal */}
+      {/* Título Principal da Página. */}
       <h1 className="text-4xl md:text-5xl font-bold text-center text-purple-700 mb-12">
         Nossa História e Compromisso
       </h1>
 
-      {/* Quem Somos e Nossa Filosofia */}
+      {/* Seção "Quem Somos e Nossa Filosofia" (Introdução). */}
+      {/* Apresenta a história e a filosofia da clínica com imagem e texto. */}
       <div className="flex flex-col md:flex-row items-center gap-10 mb-16 bg-white p-8 rounded-lg shadow-md">
         <div className="md:w-1/2">
-          <img 
-            src={clinicInterior} 
-            alt="Interior da Clínica Oásis Estética" 
-            className="rounded-lg shadow-md w-full h-auto object-cover" 
+          <img
+            src={clinicInterior}
+            alt="Interior da Clínica Oásis Estética"
+            className="rounded-lg shadow-md w-full h-auto object-cover"
           />
         </div>
         <div className="md:w-1/2 text-left">
           <h2 className="text-3xl font-semibold text-purple-700 mb-4">
             Transformando Sonhos em Realidade
           </h2>
+          {/* Parágrafos descrevendo a fundação e o compromisso da clínica. */}
           <p className="text-lg mb-4">
             Fundada em 2025, a Oásis Estética nasceu com a missão de oferecer um santuário de beleza
             e bem-estar, onde cada cliente é tratado com cuidado, respeito e profissionalismo.
@@ -36,7 +39,8 @@ const SobreNos = () => {
         </div>
       </div>
 
-      {/* Missão, Visão e Valores */}
+      {/* Seção "Nossa Missão, Visão e Valores". */}
+      {/* Detalha os pilares da clínica em um layout de três colunas (grid). */}
       <div className="mb-16 text-center">
         <h2 className="text-3xl font-semibold text-purple-700 mb-8">Nossa Missão, Visão e Valores</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -56,6 +60,7 @@ const SobreNos = () => {
           </div>
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold text-purple-800 mb-3">Valores</h3>
+            {/* Lista de valores da clínica. */}
             <ul className="list-disc list-inside text-sm text-left mx-auto max-w-fit">
               <li>Excelência e Qualidade</li>
               <li>Ética e Transparência</li>
@@ -67,21 +72,23 @@ const SobreNos = () => {
         </div>
       </div>
 
-      {/* Nossa Equipe */}
+      {/* Seção "Nossa Equipe". */}
+      {/* Apresenta a equipe da clínica com uma imagem e uma breve descrição. */}
       <div className="mb-16 text-center">
         <h2 className="text-3xl font-semibold text-purple-700 mb-8">Conheça Nossa Equipe</h2>
-        <img 
-            src={teamPhoto}
-            alt="Nossa Equipe Oásis Estética" 
-            className="rounded-lg shadow-md w-full max-w-4xl h-[400px] object-cover mb-6 mx-auto" 
+        <img
+          src={teamPhoto}
+          alt="Nossa Equipe Oásis Estética"
+          className="rounded-lg shadow-md w-full max-w-4xl h-[400px] object-cover mb-6 mx-auto"
         />
         <p className="text-lg mx-auto max-w-2xl">
           Nossa equipe é formada por profissionais apaixonados e dedicados,
           prontos para oferecer o melhor atendimento e os resultados que você merece.
         </p>
       </div>
-    
-      {/* Call to Action */}
+
+      {/* Seção Call to Action (CTA) Final. */}
+      {/* Convida o usuário a agendar uma avaliação. */}
       <div className="text-center bg-purple-600 text-white p-8 rounded-lg shadow-xl">
         <h2 className="text-3xl font-bold mb-4">Pronto para Sua Transformação?</h2>
         <p className="text-lg mb-6">

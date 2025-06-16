@@ -1,10 +1,15 @@
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaInstagram, FaFacebookF, FaWhatsapp } from 'react-icons/fa';
+import {
+    FaPhone, FaEnvelope, FaMapMarkerAlt, FaInstagram, FaFacebookF, FaWhatsapp
+} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import logo from '../assets/img/logo.png';
 
+// Componente Footer: Rodapé do site com informações e navegação.
 const Footer = () => (
     <footer className="bg-purple-100 text-gray-700 py-10 px-6 mt-12 shadow-inner">
+        {/* Contêiner principal que organiza o rodapé em colunas responsivas. */}
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {/* Coluna 1: Logo e uma breve descrição da clínica. */}
             <div className="flex flex-col items-center md:items-start text-center md:text-left">
                 <Link to="/" className="mb-4">
                     <img src={logo} alt="Logo Oásis Estética" className="h-24 w-auto" />
@@ -14,7 +19,7 @@ const Footer = () => (
                 </p>
             </div>
 
-            {/* Links Rápidos */}
+            {/* Coluna 2: Links de navegação rápida para as páginas do site. */}
             <div className="text-center md:text-left">
                 <h3 className="text-lg font-semibold text-purple-800 mb-4">Links Rápidos</h3>
                 <ul className="space-y-2">
@@ -26,7 +31,7 @@ const Footer = () => (
                 </ul>
             </div>
 
-            {/* Contato */}
+            {/* Coluna 3: Detalhes de contato da clínica com ícones. */}
             <div className="text-center md:text-left">
                 <h3 className="text-lg font-semibold text-purple-800 mb-4">Contato</h3>
                 <address className="not-italic space-y-2">
@@ -45,7 +50,7 @@ const Footer = () => (
                 </address>
             </div>
 
-            {/* Redes Sociais e Horário */}
+            {/* Coluna 4: Ícones de redes sociais e horário de funcionamento. */}
             <div className="text-center md:text-left">
                 <h3 className="text-lg font-semibold text-purple-800 mb-4">Siga-nos</h3>
                 <div className="flex justify-center md:justify-start space-x-4 mb-6">
@@ -55,7 +60,7 @@ const Footer = () => (
                     <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:text-purple-800 transition">
                         <FaFacebookF className="text-3xl" />
                     </a>
-                    <a href="https://wa.me/11996679717" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:text-purple-800 transition">
+                    <a href="https://wa.me/5511996679717" target="_blank" rel="noopener noreferrer" className="text-purple-600 hover:text-purple-800 transition">
                         <FaWhatsapp className="text-3xl" />
                     </a>
                 </div>
@@ -67,7 +72,7 @@ const Footer = () => (
             </div>
         </div>
 
-        {/* Linha de Copyright */}
+        {/* Linha de Copyright com o ano dinâmico. */}
         <div className="border-t border-purple-300 mt-10 pt-6 text-center text-sm text-gray-600">
             <p>&copy; {new Date().getFullYear()} Oásis Estética. Todos os direitos reservados.</p>
         </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaWhatsapp, FaStoreAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+// CADA UNIDADE DEVE TER SUA PRÓPRIA 'mapaEmbedUrl' GERADA NO GOOGLE MAPS.
 const unidades = [
   {
     id: 'pinheiros',
@@ -35,9 +36,11 @@ const unidades = [
   },
 ];
 
+// Componente principal da página de Contato.
 const Contato = () => {
   const [selectedUnit, setSelectedUnit] = useState(unidades[0]);
 
+  // Função para mudar a unidade selecionada quando o usuário clica em um card.
   const handleUnitChange = (unitId) => {
     const unit = unidades.find(u => u.id === unitId);
     if (unit) {
