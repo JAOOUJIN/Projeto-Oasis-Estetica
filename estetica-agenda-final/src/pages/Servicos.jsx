@@ -30,9 +30,9 @@ const servicosDetalhes = [
     descricaoCurta: "Pele renovada, limpa e radiante com nossos cuidados especializados.",
     imagem: imgLimpezaPele2,
     tratamentos: [ // Tratamentos específicos dentro desta categoria
-      { id: "limpeza-profunda", nome: "Limpeza de Pele Profunda", descricao: "...", imagem: imgFacial3, beneficios: ["...", "..."] },
-      { id: "peeling-diamante", nome: "Limpeza de Pele com Peeling de Diamante", descricao: "...", imagem: imgFacial4, beneficios: ["...", "..."] },
-      { id: "hidratacao-facial", nome: "Hidratação Facial Revitalizante", descricao: "...", imagem: imgFacial1, beneficios: ["...", "..."] },
+      { id: "limpeza-profunda", nome: "Limpeza de Pele Profunda", descricao: "Remoção de cravos e espinhas, desintoxicação e hidratação para uma pele saudável.", imagem: imgFacial3, beneficios: ["Remoção de impurezas", "Melhora da textura", "Pele mais luminosa"] },
+      { id: "peeling-diamante", nome: "Limpeza de Pele com Peeling de Diamante", descricao: "Esfoliação profunda que remove células mortas, suaviza linhas finas e uniformiza o tom da pele.", imagem: imgFacial4, beneficios: ["Redução de poros", "Estímulo de colágeno", "Pele aveludada"] },
+      { id: "hidratacao-facial", nome: "Hidratação Facial Revitalizante", descricao: "Tratamento para repor a umidade da pele, restaurar o brilho e a elasticidade, essencial para todos os tipos de pele.", imagem: imgFacial1, beneficios: ["Pele macia e suave", "Redução de linhas finas", "Aspecto saudável"] },
     ]
   },
   {
@@ -40,9 +40,9 @@ const servicosDetalhes = [
     descricaoCurta: "Alivie tensões e promova o bem-estar do corpo e da mente.",
     imagem: imgMassagem,
     tratamentos: [
-      { id: "massagem-relaxante", nome: "Massagem Relaxante", descricao: "...", imagem: imgMassagem2, beneficios: ["...", "..."] },
-      { id: "massagem-modeladora", nome: "Massagem Modeladora", descricao: "...", imagem: imgMassagem3, beneficios: ["...", "..."] },
-      { id: "pedras-quentes", nome: "Massagem com Pedras Quentes", descricao: "...", imagem: imgMassagem4, beneficios: ["...", "..."] },
+      { id: "massagem-relaxante", nome: "Massagem Relaxante", descricao: "Técnicas suaves que promovem relaxamento muscular profundo e alívio do estresse diário.", imagem: imgMassagem2, beneficios: ["Redução de estresse", "Melhora do sono", "Alívio de dores leves"] },
+      { id: "massagem-modeladora", nome: "Massagem Modeladora", descricao: "Manobras intensas que atuam na redução de medidas e celulite, modelando o contorno corporal.", imagem: imgMassagem3, beneficios: ["Redução de celulite", "Melhora da circulação", "Contorno corporal"] },
+      { id: "pedras-quentes", nome: "Massagem com Pedras Quentes", descricao: "Terapia milenar que utiliza pedras vulcânicas aquecidas para um relaxamento profundo e alívio de tensões.", imagem: imgMassagem4, beneficios: ["Alívio de dores musculares", "Melhora da energia", "Relaxamento profundo"] },
     ]
   },
   {
@@ -50,7 +50,7 @@ const servicosDetalhes = [
     descricaoCurta: "Liberte-se dos pelos indesejados com tecnologia avançada e resultados duradouros.",
     imagem: imgDepilacaoLaser,
     tratamentos: [
-      { id: "laser-diodo", nome: "Depilação a Laser Diodo", descricao: "...", imagem: imgLaser2, beneficios: ["...", "..."] },
+      { id: "laser-diodo", nome: "Depilação a Laser Diodo", descricao: "Tecnologia eficaz para remoção de pelos em diversas áreas do corpo, com segurança e conforto.", imagem: imgLaser2, beneficios: ["Resultados duradouros", "Pele lisa", "Redução de pelos encravados"] },
     ]
   },
   {
@@ -58,9 +58,9 @@ const servicosDetalhes = [
     descricaoCurta: "Cuidados especializados para o corpo que transformam e elevam sua autoestima.",
     imagem: imgTratamentoCorporal,
     tratamentos: [
-      { id: "drenagem-linfatica", nome: "Drenagem Linfática", descricao: "...", imagem: imgTratamento1, beneficios: ["...", "..."] },
-      { id: "reducao-medidas", nome: "Redução de Medidas", descricao: "...", imagem: imgMassagem5, beneficios: ["...", "..."] },
-      { id: "esfoliacao-corporal", nome: "Esfoliação Corporal Renovadora", descricao: "...", imagem: imgSobrenos2, beneficios: ["...", "..."] },
+      { id: "drenagem-linfatica", nome: "Drenagem Linfática", descricao: "Massagem suave que estimula o sistema linfático, reduzindo inchaços e melhorando a circulação.", imagem: imgTratamento1, beneficios: ["Redução de retenção de líquidos", "Desintoxicação", "Melhora da celulite"] },
+      { id: "reducao-medidas", nome: "Redução de Medidas", descricao: "Procedimentos e tecnologias combinadas para combater a gordura localizada e modelar o corpo.", imagem: imgMassagem5, beneficios: ["Remodelagem corporal", "Redução de gordura", "Melhora da silhueta"] },
+      { id: "esfoliacao-corporal", nome: "Esfoliação Corporal Renovadora", descricao: "Tratamento que remove células mortas, deixando a pele macia, sedosa e preparada para absorver nutrientes.", imagem: imgSobrenos2, beneficios: ["Pele renovada", "Hidratação profunda", "Melhora da circulação"] },
     ]
   },
 ];
