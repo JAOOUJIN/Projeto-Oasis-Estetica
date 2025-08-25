@@ -59,6 +59,5 @@ Para executar o projeto em sua máquina, siga os passos abaixo:
 ## 👥 Responsáveis pelo Projeto
 
 * **Seung Jin Juca Casierra** - SP3134229
-* **Gabriel Mendes Porto** - SP3138178
 
 ---
